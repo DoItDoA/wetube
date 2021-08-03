@@ -9,13 +9,15 @@ const userSchema = new mongoose.Schema({
   password: { type: String },
   name: { type: String, required: true },
   location: String,
+  videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }], // mongoDB users에 있는 objectId로 참조하여 배열로 저장
 });
 
 userSchema.pre("save", async function () {
-  console.log("user :", this.password);
-  this.password = await bcrypt.hash(this.password, 5);
-  console.log("hash :", this.password);
+  //password가 수정이 되면 실행, this는 user를 가리킴
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 5);
+  }
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema); // User를 소문자 user로 바꾸로 s를 붙여 users로 변경하여 DB생성
 export default User;

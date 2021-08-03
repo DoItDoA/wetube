@@ -24,6 +24,7 @@ app.use(
   })
 ); // 브라우저에 쿠키값 보냄
 app.use(localsMiddleware);
+app.use("/uploads", express.static("uploads"));
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/video", videoRouter);

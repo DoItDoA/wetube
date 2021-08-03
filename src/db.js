@@ -5,6 +5,7 @@ mongoose.connect(process.env.DB_URL, {
   useUnifiedTopology: true, //
   useFindAndModify: true, //findByIdAndUpdate() 사용하기 위해 설정
   useCreateIndex: true, // unique:true 사용하기 위해 설정
+  useFindAndModify: false, //findByIdAndUpdate 등 optional 기본값이 false인데 true로 주면 설정
 });
 
 const db = mongoose.connection;
