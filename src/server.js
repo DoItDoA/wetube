@@ -24,7 +24,8 @@ app.use(
   })
 ); // 브라우저에 쿠키값 보냄
 app.use(localsMiddleware);
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static("uploads")); // express에게 /uploads url로 가서 uploads 폴더를 열 수 있게함
+app.use("/static", express.static("assets"));
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/video", videoRouter);
