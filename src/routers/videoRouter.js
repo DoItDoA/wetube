@@ -17,14 +17,22 @@ videoRouter
   .all(protectorMiddleware)
   .get(getEdit)
   .post(postEdit);
+
 videoRouter
   .route("/:id([0-9a-f]{24})/delete")
   .all(protectorMiddleware)
   .get(getDelete);
+
 videoRouter
   .route("/upload")
   .all(protectorMiddleware)
   .get(getUpload)
-  .post(videoUpload.single("video"), postUpload);
+  .post(
+    videoUpload.fields([
+      { name: "video", maxCount: 1 },
+      { name: "thumbnail", maxCount: 1 },
+    ]),
+    postUpload
+  ); // single 한개의 파일, fields 여러개의 파일
 
 export default videoRouter;

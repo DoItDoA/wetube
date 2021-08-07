@@ -1,17 +1,25 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 
+const BASE_JS = "./src/client/js/";
+
 module.exports = {
-  entry: "./src/client/js/main.js", // 변경하고자 하는 파일 (최신 자바스크립트를 구식 자바스크립트로 변경 및 압축)
-  mode: "development", // development: 개발중 , production: 완성품
-  watch: true, // run 실행 후 entry 안의 파일이 바뀔때마다 자동으로 run 해준다
+  // 변경하고자 하는 파일 (최신 자바스크립트를 구식 자바스크립트로 변경 및 압축)
+  entry: {
+    main: BASE_JS + "main.js",
+    videoPlayer: BASE_JS + "videoPlayer.js",
+    recorder: BASE_JS + "recorder.js",
+    commentSection: BASE_JS + "commentSection.js",
+  },
+  // mode: "development", // development: 개발중 , production: 완성품, package.json에서 설정 가능
+  // watch: true, // run 실행 후 entry 안의 파일이 바뀔때마다 자동으로 run 해준다, package.json에서 설정 가능
   plugins: [
     new MiniCssExtractPlugin({
       filename: "css/styles.css", // 변경된 css파일명
     }),
   ], // MiniCssExtractPlugin 세팅
   output: {
-    filename: "js/main.js", // 변경된 js파일명
+    filename: "js/[name].js", // [name]을 표시하면 entry에 있는 이름들을 가져온다
     path: path.resolve(__dirname, "assets"), // 변경된 파일 위치, path.resolve->__dirname/assets
     clean: true, // output 폴더를 build 하기전에 clean 해준다
   },

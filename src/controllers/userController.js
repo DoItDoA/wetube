@@ -138,6 +138,7 @@ export const finishGithubLogin = async (req, res) => {
 };
 
 export const logout = (req, res) => {
+  req.flash("info", "logged out"); // 템플릿에서 messages.info로 사용가능
   req.session.destroy();
   return res.redirect("/");
 };
@@ -178,6 +179,7 @@ export const postEdit = async (req, res) => {
 
 export const getChangePassword = (req, res) => {
   if (req.session.user.socialOnly === true) {
+    req.flash("error", "Can't change password"); // 템플릿에서 messages.error로 사용가능
     return res.redirect("/");
   }
   return res.render("users/change-password", { pageTitle: "Change Password" });
@@ -206,6 +208,7 @@ export const postChangePassword = async (req, res) => {
   user.password = newPassword;
   await user.save();
   req.session.user.password = user.password;
+  req.flash("info", "Password updated"); // 템플릿에서 messages.info로 사용가능
   return res.redirect("/users/logout");
 };
 export const see = async (req, res) => {
